@@ -54,5 +54,5 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 		return (0);
 	if (tree->color != BLACK) /* root must be black */
 		return (0);
-	return (is_valid_rb_tree(tree, INT_MIN, INT_MAX, &black_height));
+	return (rbt_node_validator(tree, INT_MIN, INT_MAX, &black_height));
 }
