@@ -27,8 +27,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 	}
 	if (src_vertex == NULL || dest_vertex == NULL)
 		return (0);
-	/* create edge from src_vertex to dest_vertex */
-	new_edge_src = malloc(sizeof(edge_t));
+	new_edge_src = malloc(sizeof(edge_t)); /* cre8 edg frm src_vtx 2 dst_vtx */
 	if (new_edge_src == NULL)
 		return (0);
 	new_edge_src->dest = dest_vertex; new_edge_src->next = src_vertex->edges;
@@ -36,17 +35,17 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 
 	if (type == BIDIRECTIONAL)
 	{
-		edge_t *new_edge_dest = malloc(sizeof(edge_t));
+		edge_t *new_edg_dst = malloc(sizeof(edge_t));
 
-		if (new_edge_dest == NULL)
+		if (new_edg_dst == NULL)
 		{
 			src_vertex->edges = new_edge_src->next; /* undo previous edge */
 			src_vertex->nb_edges--;
 			free(new_edge_src);
 			return (0);
 		}
-		new_edge_dest->dest = src_vertex; new_edge_dest->next = dest_vertex->edges;
-		dest_vertex->edges = new_edge_dest; dest_vertex->nb_edges++;
+		new_edg_dst->dest = src_vertex; new_edg_dst->next = dest_vertex->edges;
+		dest_vertex->edges = new_edg_dst; dest_vertex->nb_edges++;
 	}
 	return (1);
 }
