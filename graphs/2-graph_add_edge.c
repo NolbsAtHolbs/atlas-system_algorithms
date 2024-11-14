@@ -15,8 +15,7 @@ int graph_add_edge(graph_t *graph, const char *src,
 	edge_t *new_edge_src;
 
 	if (graph == NULL || src == NULL || dest == NULL)
-		return (0);
-	/* search for src and dest vertices */
+		return (0); /* vvv search for src and dest vertices vvv */
 	for (vertex = graph->vertices; vertex != NULL; vertex = vertex->next)
 	{
 		if (strcmp(vertex->content, src) == 0)
@@ -29,12 +28,12 @@ int graph_add_edge(graph_t *graph, const char *src,
 	if (src_vertex == NULL || dest_vertex == NULL)
 		return (0);
 	new_edge_src = malloc(sizeof(edge_t)); /* cre8 edg frm src_vtx 2 dst_vtx */
-
 	if (new_edge_src == NULL)
 		return (0);
-	new_edge_src->dest = dest_vertex; new_edge_src->next = src_vertex->edges;
-	src_vertex->edges = new_edge_src; src_vertex->nb_edges++;
-
+	new_edge_src->dest = dest_vertex;
+	new_edge_src->next = src_vertex->edges;
+	src_vertex->edges = new_edge_src;
+	src_vertex->nb_edges++;
 	if (type == BIDIRECTIONAL)
 	{
 		edge_t *new_edg_dst = malloc(sizeof(edge_t));
@@ -46,8 +45,10 @@ int graph_add_edge(graph_t *graph, const char *src,
 			free(new_edge_src);
 			return (0);
 		}
-		new_edg_dst->dest = src_vertex; new_edg_dst->next = dest_vertex->edges;
-		dest_vertex->edges = new_edg_dst; dest_vertex->nb_edges++;
+		new_edg_dst->dest = src_vertex;
+		new_edg_dst->next = dest_vertex->edges;
+		dest_vertex->edges = new_edg_dst;
+		dest_vertex->nb_edges++;
 	}
 	return (1);
 }
