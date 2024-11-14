@@ -29,6 +29,7 @@ int graph_add_edge(graph_t *graph, const char *src,
 	if (src_vertex == NULL || dest_vertex == NULL)
 		return (0);
 	new_edge_src = malloc(sizeof(edge_t)); /* cre8 edg frm src_vtx 2 dst_vtx */
+
 	if (new_edge_src == NULL)
 		return (0);
 	new_edge_src->dest = dest_vertex; new_edge_src->next = src_vertex->edges;
