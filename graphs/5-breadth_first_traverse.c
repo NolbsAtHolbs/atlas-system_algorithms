@@ -9,7 +9,7 @@
 size_t breadth_first_traverse(const graph_t *graph,
 							  void (*action)(const vertex_t *v, size_t depth))
 {
-	size_t depth = 0, max_depth = 0, *lvl = NULL, front = 0, back = 0;
+	size_t depth = 0, max_depth = 0, front = 0, back = 0, *lvl = NULL;
 	char *visited = NULL;
 	vertex_t **q = NULL, *vertex = NULL;
 	edge_t *edge = NULL;
@@ -21,20 +21,21 @@ size_t breadth_first_traverse(const graph_t *graph,
 	q = malloc(sizeof(vertex_t *) * graph->nb_vertices);
 
 	if (!visited || !lvl || !q)
-	{
-		free(visited); free(lvl); free(q);
-		return (0);
-	}
+		return (free(visited), free(lvl), free(q), 0);
 	vertex = graph->vertices; /* initialize traversal from the first vertex */
-	visited[vertex->index] = 1; lvl[vertex->index] = 0; q[back++] = vertex;
+	visited[vertex->index] = 1;
+	lvl[vertex->index] = 0;
+	q[back++] = vertex;
 
 	while (front < back) /* perform BFS traversal */
 	{
-		vertex = q[front++]; depth = lvl[vertex->index]; action(vertex, depth);
+		vertex = q[front++];
+		depth = lvl[vertex->index];
+		action(vertex, depth);
 
 		if (depth > max_depth)
 			max_depth = depth;
-		for (edge = vertex->edges; edge; edge = edge->next) /* nq ajcnt vrtz */
+		for (edge = vertex->edges; edge; edge = edge->next) /* nq djcnt vrtz */
 		{
 			if (!visited[edge->dest->index])
 			{
@@ -44,6 +45,5 @@ size_t breadth_first_traverse(const graph_t *graph,
 			}
 		}
 	}
-	free(visited); free(lvl); free(q);
-	return (max_depth);
+	return (free(visited), free(lvl), free(q), max_depth);
 }
