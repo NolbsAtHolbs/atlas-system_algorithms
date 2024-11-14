@@ -20,6 +20,7 @@ size_t depth_first_traverse(const graph_t *graph,
 		return (0);
 	size_t visited_size = graph->nb_vertices; /* mark all vrtcs as not vistd */
 	char *visited = calloc(visited_size, sizeof(char));
+
 	if (visited == NULL)
 		return (0);
 	/* start traversal from the first vertex in the vertices list */
@@ -51,6 +52,7 @@ size_t dfs_recur(const vertex_t *vertex,
 	for (edge = vertex->edges; edge != NULL; edge = edge->next)
 	{
 		size_t child_depth = dfs_recur(edge->dest, action, depth + 1, visited);
+
 		if (child_depth > max_depth)
 			max_depth = child_depth;
 	}
