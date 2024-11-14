@@ -1,5 +1,7 @@
 #include "rb_trees.h"
 
+rb_tree_t *rb_tree_search(rb_tree_t *root, int n);
+
 /**
  * rb_tree_remove - removes a node from a red-black tree
  * @root: pointer to the root node of the tree
