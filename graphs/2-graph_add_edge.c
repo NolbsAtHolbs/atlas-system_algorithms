@@ -8,7 +8,8 @@
  * @type: type of edge (UNIDIRECTIONAL or BIDIRECTIONAL)
  * Return: 1 on success, else 0
  */
-int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
+int graph_add_edge(graph_t *graph, const char *src,
+				   const char *dest, edge_type_t type)
 {
 	vertex_t *src_vertex = NULL, *dest_vertex = NULL, *vertex;
 	edge_t *new_edge_src;
