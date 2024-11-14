@@ -18,7 +18,7 @@ size_t depth_first_traverse(const graph_t *graph,
 
 	if (graph == NULL || action == NULL || graph->vertices == NULL)
 		return (0);
-	size_t visited_size = graph->nb_vertices; /* mark all vertices as not visited */
+	size_t visited_size = graph->nb_vertices; /* mark all vrtcs as not vistd */
 	char *visited = calloc(visited_size, sizeof(char));
 	if (visited == NULL)
 		return (0);
