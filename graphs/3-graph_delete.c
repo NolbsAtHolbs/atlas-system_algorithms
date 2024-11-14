@@ -17,7 +17,7 @@ void graph_delete(graph_t *graph)
 		edge = vertex->edges; /* free all edges of the vertex */
 		while (edge != NULL)
 		{
-			tmp_edge = edge->next;
+			tmp_edge = edge->next; /* temp ptr to store next edge */
 			free(edge);
 			edge = tmp_edge;
 		}
@@ -27,5 +27,5 @@ void graph_delete(graph_t *graph)
 		free(vertex);
 		vertex = tmp_vertex;
 	}
-	free(graph); /* free graph structure itself */
+	free(graph);
 }
