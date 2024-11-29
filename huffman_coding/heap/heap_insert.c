@@ -11,7 +11,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	binary_tree_node_t *new_node, *current_node, *node_queue[1024];
 	int front = 0, end = 0;
 
-	if (data == NULL || new_node == NULL || heap == NULL)
+	if (data == NULL || heap == NULL)
 		return (NULL);
 	new_node = binary_tree_node(NULL, data);
 	if (!heap->root)
