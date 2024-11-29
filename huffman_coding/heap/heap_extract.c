@@ -1,6 +1,6 @@
 #include "heap.h"
 
-void bubble_down(heap_t *heap, binary_tree_node_t *node);
+void sift_down(heap_t *heap, binary_tree_node_t *node);
 
 /**
  * heap_extract - extracts the root value from the Min Binary Heap
@@ -49,16 +49,16 @@ void *heap_extract(heap_t *heap)
 	}
 	heap->size--;
 	if (heap->root) /* restore heap property */
-		bubble_down(heap, heap->root);
+		sift_down(heap, heap->root);
 	return (data);
 }
 
 /**
- * bubble_down - Restores the min-heap property by sifting down
- * @heap: Pointer to the heap
- * @node: Pointer to the node to sift down
+ * sift_down - restores the min-heap property by sifting down vals
+ * @heap: pointer to the heap
+ * @node: pointer to the node to sift down
  */
-void bubble_down(heap_t *heap, binary_tree_node_t *node)
+void sift_down(heap_t *heap, binary_tree_node_t *node)
 {
 	binary_tree_node_t *min_child;
 	void *temp_data;
