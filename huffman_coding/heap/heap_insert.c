@@ -18,11 +18,11 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (!new)
 		return (NULL);
 	if (!heap->root)
-		heap->root = new; /* Set new node as root if heap is empty */
+		heap->root = new; /* set new node as root if heap is empty */
 	else
 	{
 		curr = heap->root, queue[end++] = curr;
-		while (front < end) /* Level-order traversal to find insertion point */
+		while (front < end) /* level-order traversal to find insertion point */
 		{
 			curr = queue[front++];
 			if (!curr->left)
