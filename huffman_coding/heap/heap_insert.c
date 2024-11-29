@@ -8,24 +8,19 @@
  */
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	binary_tree_node_t *new_node, *current_node;
-	binary_tree_node_t *node_queue[1024];
-	int front = 0, rear = 0;
+	binary_tree_node_t *new_node, *current_node, *node_queue[1024];
+	int front = 0, end = 0;
 
-	if (data == NULL)
+	if (data == NULL || new_node == NULL || heap == NULL)
 		return (NULL);
 	new_node = binary_tree_node(NULL, data);
-	if (new_node == NULL)
-		return (NULL);
-	if (heap == NULL)
-		return (NULL);
 	if (!heap->root)
 		heap->root = new_node;
 	else
 	{
 		current_node = heap->root; /* level-order trvrse to find insrt point */
-		node_queue[rear++] = current_node;
-		while (front < rear)
+		node_queue[end++] = current_node;
+		while (front < end)
 		{
 			current_node = node_queue[front++];
 			if (!current_node->left)
@@ -35,7 +30,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 				break;
 			}
 			else
-				node_queue[rear++] = current_node->left;
+				node_queue[end++] = current_node->left;
 			if (!current_node->right)
 			{
 				current_node->right = new_node;
@@ -43,7 +38,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 				break;
 			}
 			else
-				node_queue[rear++] = current_node->right;
+				node_queue[end++] = current_node->right;
 		}
 	} /* restore the min-heap property by sifting up */
 	while (new_node->parent && heap->data_cmp(
