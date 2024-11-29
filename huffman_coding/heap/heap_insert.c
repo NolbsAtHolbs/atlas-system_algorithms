@@ -42,6 +42,7 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	while (new->parent && heap->data_cmp(new->data, new->parent->data) < 0)
 	{ /* restore min-heap property by sifting up */
 		void *temp = new->data;
+
 		new->data = new->parent->data;
 		new->parent->data = temp;
 		new = new->parent;
