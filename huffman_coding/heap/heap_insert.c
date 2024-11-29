@@ -1,56 +1,51 @@
 #include "heap.h"
 
 /**
- * heap_insert - inserts a value into a Min Binary Heap
- * @heap: pointer to heap in which the node has to be inserted
- * @data: pointer containing the data to store in the new node
- * Return: pointer to created node containing data, or NULL if it fails
+ * heap_insert - Inserts a value into a Min Binary Heap
+ * @heap: Pointer to the heap where the node is inserted
+ * @data: Pointer to the data to store in the new node
+ *
+ * Return: Pointer to the created node containing data, or NULL if it fails
  */
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
-	binary_tree_node_t *new_node, *current_node, *node_queue[1024];
+	binary_tree_node_t *new, *curr, *queue[1024];
 	int front = 0, end = 0;
 
-	if (data == NULL || heap == NULL)
+	if (!heap || !data)
 		return (NULL);
-	new_node = binary_tree_node(NULL, data);
-	if (new_node == NULL)
+	new = binary_tree_node(NULL, data); /* create a new node */
+	if (!new)
 		return (NULL);
 	if (!heap->root)
-		heap->root = new_node;
+		heap->root = new; /* Set new node as root if heap is empty */
 	else
 	{
-		current_node = heap->root; /* level-order trvrse to find insrt point */
-		node_queue[end++] = current_node;
-		while (front < end)
+		curr = heap->root, queue[end++] = curr;
+		while (front < end) /* Level-order traversal to find insertion point */
 		{
-			current_node = node_queue[front++];
-			if (!current_node->left)
+			curr = queue[front++];
+			if (!curr->left)
 			{
-				current_node->left = new_node;
-				new_node->parent = current_node;
+				curr->left = new, new->parent = curr;
 				break;
 			}
-			else
-				node_queue[end++] = current_node->left;
-			if (!current_node->right)
+			queue[end++] = curr->left;
+			if (!curr->right)
 			{
-				current_node->right = new_node;
-				new_node->parent = current_node;
+				curr->right = new, new->parent = curr;
 				break;
 			}
-			else
-				node_queue[end++] = current_node->right;
+			queue[end++] = curr->right;
 		}
-	} /* restore the min-heap property by sifting up */
-	while (new_node->parent && heap->data_cmp(
-			new_node->data, new_node->parent->data) < 0)
-	{
-		void *temp_data = new_node->data;
-		new_node->data = new_node->parent->data;
-		new_node->parent->data = temp_data;
-		new_node = new_node->parent;
+	}
+	while (new->parent && heap->data_cmp(new->data, new->parent->data) < 0)
+	{ /* restore min-heap property by sifting up */
+		void *temp = new->data;
+		new->data = new->parent->data;
+		new->parent->data = temp;
+		new = new->parent;
 	}
 	heap->size++;
-	return (new_node);
+	return (new);
 }
