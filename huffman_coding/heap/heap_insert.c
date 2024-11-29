@@ -14,6 +14,8 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (data == NULL || heap == NULL)
 		return (NULL);
 	new_node = binary_tree_node(NULL, data);
+	if (new_node == NULL)
+		return (NULL);
 	if (!heap->root)
 		heap->root = new_node;
 	else
