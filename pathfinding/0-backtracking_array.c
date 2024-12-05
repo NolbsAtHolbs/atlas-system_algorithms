@@ -10,7 +10,7 @@ int backtrack(char **map, int rows, int cols, int x, int y,
  * @cols: number of columns in map
  * @start: pointer to the starting point
  * @target: pointer to the target point
- * Return: queue in which each node is a point in the path from start to target,
+ * Return: queue where each node is a point in the path from start to target,
  *         or NULL if no path is found
  */
 queue_t *backtracking_array(char **map, int rows, int cols,
