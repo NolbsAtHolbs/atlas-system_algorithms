@@ -9,8 +9,8 @@
  */
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 {
-	binary_tree_node_t *root = NULL;
-	heap_t *priority_queue = NULL;
+	binary_tree_node_t *root;
+	heap_t *priority_queue;
 
 	if (!data || !freq || size == 0)
 		return (NULL); /* invalid input */
@@ -18,8 +18,13 @@ binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 	if (!priority_queue)
 		return (NULL); /* failed to create PQ */
 	while (priority_queue->size > 1) /* build the huffman tree */
+	{
 		if (!huffman_extract_and_insert(priority_queue))
+		{
+			heap_delete(priority_queue, NULL); /* prevents memory leaks */
 			return (NULL); /* failed during extraction and insertion */
+		}
+	}
 	root = heap_extract(priority_queue); /* xtract root node of huffman tree */
 	heap_delete(priority_queue, NULL);
 	return (root);
