@@ -18,7 +18,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 {
 	queue_t *path = NULL;
 	int *visited = NULL, *dist = NULL;
-	vertex_t **prev = NULL, *vertex = NULL;
+	vertex_t **prev = NULL;
 	size_t i;
 	if (!graph || !start || !target)
 		return (NULL);
@@ -28,10 +28,10 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	if (!visited || !dist || !prev)
 		return (free(visited), free(dist), free(prev), NULL);
 	for (i = 0; i < graph->nb_vertices; i++)
-		dist[i] = INT_MAX;
-	dist[start->index] = 0;
+		dist[i] = INT_MAX; /* init distances to infinity */
+	dist[start->index] = 0; /* distance from start vertex to self is 0 */
 	if (!dijkstra_algorithm(graph, start, target, visited, dist, prev))
-	{
+	{ /* compute shortest paths and free if algo fails */
 		free(visited), free(dist), free(prev);
 		return (NULL);
 	}
