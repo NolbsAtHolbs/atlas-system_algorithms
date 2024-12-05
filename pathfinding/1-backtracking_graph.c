@@ -47,6 +47,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  * @target: pointer to the target vertex
  * @path: queue to store the path
  * @visited: queue to keep track of visited vertices
+ *
  * Return: 1 if path is found, 0 otherwise
  */
 int backtrack(vertex_t const *current, vertex_t const *target,
@@ -56,15 +57,15 @@ int backtrack(vertex_t const *current, vertex_t const *target,
 	char *vertex_name;
 	queue_node_t *node;
 
-	printf("Checking %s\n", current->content);
 	for (node = visited->front; node; node = node->next)
-	{ /* Check if current vertex is already visited */
+	{ /* check if current vertex is already visited */
 		if (node->ptr == current)
 			return (0);
-	} /* Mark current vertex as visited */
+	} /* mark current vertex as visited */
 	if (!queue_push_back(visited, (void *)current))
 		return (0);
-	if (current == target)
+	printf("Checking %s\n", current->content);
+	if (current == target) /* check if current vertex is the target */
 	{
 		vertex_name = strdup(current->content);
 		if (!vertex_name)
@@ -75,7 +76,7 @@ int backtrack(vertex_t const *current, vertex_t const *target,
 			return (0);
 		}
 		return (1);
-	}
+	} /* explore adjacent vertices */
 	for (edge = current->edges; edge; edge = edge->next)
 	{
 		if (backtrack(edge->dest, target, path, visited))
