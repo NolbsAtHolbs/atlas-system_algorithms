@@ -10,7 +10,7 @@
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 {
 	binary_tree_node_t *root;
-	heap_t *priority_queue;
+	heap_t *priority_queue = NULL;
 
 	if (!data || !freq || size == 0)
 		return (NULL); /* invalid input */
