@@ -7,11 +7,11 @@ queue_t *build_path(vertex_t const *start, vertex_t const *target,
 					vertex_t **prev);
 
 /**
- * dijkstra_graph - finds the shortest path from start to target using Dijkstra's algorithm
+ * dijkstra_graph - finds shortest path from start to target w/ Dijkstra's algo
  * @graph: pointer to the graph
  * @start: pointer to the starting vertex
  * @target: pointer to the target vertex
- * Return: queue containing the path from start to target, or NULL if no path found
+ * Return: queue containing path from start to target, or NULL if no path found
  */
 queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 						vertex_t const *target)
@@ -20,6 +20,7 @@ queue_t *dijkstra_graph(graph_t *graph, vertex_t const *start,
 	int *visited = NULL, *dist = NULL;
 	vertex_t **prev = NULL;
 	size_t i;
+
 	if (!graph || !start || !target)
 		return (NULL);
 	visited = calloc(graph->nb_vertices, sizeof(int));
