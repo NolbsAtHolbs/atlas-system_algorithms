@@ -12,47 +12,34 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 	size_t combined_freq;
 
 	if (!priority_queue || priority_queue->size < 2)
-		return (0); /* extract two nodes from the heap */
+		return (0); /* invalid priority queue or not enough nodes */
 	node1 = heap_extract(priority_queue);
 	if (!node1)
-		return (0);
+		return (0); /* failed to extract first node */
 	node2 = heap_extract(priority_queue);
 	if (!node2)
-	{   /* reinsert node1 back into the heap */
-		heap_insert(priority_queue, node1);
-		return (0);
-	} /* get the symbols from the nodes */
+		return (heap_insert(priority_queue, node1), 0); /* node2 xtrctn fail */
 	symbol1 = (symbol_t *)node1->data;
 	symbol2 = (symbol_t *)node2->data;
-	/* combine frequencies */
-	combined_freq = symbol1->freq + symbol2->freq;
-	/* create a new symbol with data = -1 and combined frequency */
+	combined_freq = symbol1->freq + symbol2->freq; /* combine frequencies */
 	new_symbol = symbol_create(-1, combined_freq);
 	if (!new_symbol)
-	{
-		heap_insert(priority_queue, node1);
-		heap_insert(priority_queue, node2);
-		return (0);
-	} /* create a new node with the new symbol */
+		return (heap_insert(priority_queue, node1),
+			heap_insert(priority_queue, node2), 0); /* failed to make symbol */
 	new_node = binary_tree_node(NULL, new_symbol);
 	if (!new_node)
 	{
 		free(new_symbol);
-		heap_insert(priority_queue, node1);
-		heap_insert(priority_queue, node2);
-		return (0);
-	} /* set the left and right children of the new node */
-	new_node->left = node1;
-	new_node->right = node2;
-	node1->parent = new_node;
-	node2->parent = new_node; /* insert new node back into priority queue */
+		return (heap_insert(priority_queue, node1),
+			heap_insert(priority_queue, node2), 0); /* failed to create node */
+	}
+	new_node->left = node1, new_node->right = node2; /* set children */
+	node1->parent = new_node, node2->parent = new_node; /* set parents */
 	if (!heap_insert(priority_queue, new_node))
 	{
-		free(new_node);
-		free(new_symbol);
-		heap_insert(priority_queue, node1);
-		heap_insert(priority_queue, node2);
-		return (0);
+		free(new_node), free(new_symbol);
+		return (heap_insert(priority_queue, node1),
+			heap_insert(priority_queue, node2), 0); /* insert new node fail */
 	}
 	return (1);
 }
