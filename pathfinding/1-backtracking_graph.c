@@ -1,7 +1,7 @@
 #include "pathfinding.h"
 
 int backtrack(vertex_t const *current, vertex_t const *target,
-			  queue_t *path, int *visited);
+			  queue_t *path, queue_t *visited);
 
 /**
  * backtracking_graph - searches for a path from start to target in a graph
@@ -12,34 +12,33 @@ int backtrack(vertex_t const *current, vertex_t const *target,
  *         forming a path from start to target, or NULL if no path is found
  */
 queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
-                            vertex_t const *target)
+							vertex_t const *target)
 {
-    queue_t *path = NULL;
-    int *visited = NULL;
+	queue_t *path = NULL;
+	queue_t *visited = NULL;
 
-    if (!graph || !start || !target)
-        return (NULL);
-    path = queue_create();
-    if (!path)
-        return (NULL);
-    /* allocate an array to keep track of visited vertices */
-    visited = calloc(graph->nb_vertices, sizeof(int));
-    if (!visited)
-    {
-        queue_delete(path);
-        return (NULL);
-    }
-    if (backtrack(start, target, path, visited))
-    {
-        free(visited);
-        return (path);
-    }
-    else
-    {
-        free(visited);
-        queue_delete(path);
-        return (NULL);
-    }
+	if (!graph || !start || !target)
+		return (NULL);
+	path = queue_create();
+	if (!path)
+		return (NULL);
+	visited = queue_create();
+	if (!visited)
+	{
+		queue_delete(path);
+		return (NULL);
+	}
+	if (backtrack(start, target, path, visited))
+	{
+		queue_delete(visited);
+		return (path);
+	}
+	else
+	{
+		queue_delete(visited);
+		queue_delete(path);
+		return (NULL);
+	}
 }
 
 /**
@@ -47,45 +46,50 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
  * @current: pointer to the current vertex
  * @target: pointer to the target vertex
  * @path: queue to store the path
- * @visited: array to keep track of visited vertices by index
+ * @visited: queue to keep track of visited vertices
  * Return: 1 if path is found, 0 otherwise
  */
 int backtrack(vertex_t const *current, vertex_t const *target,
-              queue_t *path, int *visited)
+			  queue_t *path, queue_t *visited)
 {
-    edge_t *edge;
-    char *vertex_name;
+	edge_t *edge;
+	char *vertex_name;
+	queue_node_t *node;
 
-    printf("Checking %s\n", current->content);
-    if (visited[current->index])
-        return (0);
-    visited[current->index] = 1;
-    if (current == target)
-    {
-        vertex_name = strdup(current->content);
-        if (!vertex_name)
-            return (0);
-        if (!queue_push_front(path, vertex_name))
-        {
-            free(vertex_name);
-            return (0);
-        }
-        return (1);
-    }
-    for (edge = current->edges; edge; edge = edge->next)
-    {
-        if (backtrack(edge->dest, target, path, visited))
-        {
-            vertex_name = strdup(current->content);
-            if (!vertex_name)
-                return (0);
-            if (!queue_push_front(path, vertex_name))
-            {
-                free(vertex_name);
-                return (0);
-            }
-            return (1);
-        }
-    }
-    return (0);
+	printf("Checking %s\n", current->content);
+	for (node = visited->front; node; node = node->next)
+	{ /* Check if current vertex is already visited */
+		if (node->ptr == current)
+			return (0);
+	} /* Mark current vertex as visited */
+	if (!queue_push_back(visited, (void *)current))
+		return (0);
+	if (current == target)
+	{
+		vertex_name = strdup(current->content);
+		if (!vertex_name)
+			return (0);
+		if (!queue_push_front(path, vertex_name))
+		{
+			free(vertex_name);
+			return (0);
+		}
+		return (1);
+	}
+	for (edge = current->edges; edge; edge = edge->next)
+	{
+		if (backtrack(edge->dest, target, path, visited))
+		{
+			vertex_name = strdup(current->content);
+			if (!vertex_name)
+				return (0);
+			if (!queue_push_front(path, vertex_name))
+			{
+				free(vertex_name);
+				return (0);
+			}
+			return (1);
+		}
+	}
+	return (0);
 }
