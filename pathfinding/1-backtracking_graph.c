@@ -59,7 +59,7 @@ int backtrack(vertex_t const *current, vertex_t const *target,
 	printf("Checking %s\n", current->content);
 	if (is_visited(visited, current->content))
 		return (0);
-	if (!enqueue(visited, (void *)current->content))
+	if (!queue_push_back(visited, (void *)current->content))
 		return (0);
 	if (current == target)
 	{
@@ -95,6 +95,7 @@ int backtrack(vertex_t const *current, vertex_t const *target,
  * is_visited - checks if a vertex has been visited
  * @visited: queue of visited vertices
  * @content: content of the current vertex
+ *
  * Return: 1 if visited, 0 otherwise
  */
 int is_visited(queue_t *visited, char *content)
@@ -102,9 +103,7 @@ int is_visited(queue_t *visited, char *content)
 	queue_node_t *node;
 
 	for (node = visited->front; node; node = node->next)
-	{
 		if (strcmp((char *)node->ptr, content) == 0)
 			return (1);
-	}
 	return (0);
 }
