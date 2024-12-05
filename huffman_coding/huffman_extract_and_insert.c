@@ -75,7 +75,5 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 		heap_insert(priority_queue, heap_node2);
 		return (0);
 	}
-	free(heap_node1); /* free the extracted heap nodes */
-	free(heap_node2);
 	return (1);
 }
