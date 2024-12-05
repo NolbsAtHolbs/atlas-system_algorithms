@@ -13,16 +13,23 @@ static int symbol_cmp(void *p1, void *p2)
 	symbol_t *symbol1 = (symbol_t *)node1->data;
 	symbol_t *symbol2 = (symbol_t *)node2->data;
 
-	if (symbol1->freq > symbol2->freq)
+	if (symbol1->freq > symbol2->freq) /* compare frequencies */
 		return (1);
 	else if (symbol1->freq < symbol2->freq)
 		return (-1);
 	else
-		return (0);
+	{   /* frequencies are equal, compare data */
+		if ((unsigned char)symbol1->data > (unsigned char)symbol2->data)
+			return (1);
+		else if ((unsigned char)symbol1->data < (unsigned char)symbol2->data)
+			return (-1);
+		else
+			return (0);
+	}
 }
 
 /**
- * huffman_priority_queue - creates a priority queue for Huffman coding
+ * huffman_priority_queue - creates a priority queue for huffman coding
  * @data: array of characters
  * @freq: array of frequencies
  * @size: size of the arrays
@@ -35,32 +42,27 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 
 	if (!data || !freq || size == 0)
 		return (NULL);
-	heap = heap_create(symbol_cmp); /* create heap with symbol comparison func */
+	heap = heap_create(symbol_cmp);
 	if (!heap)
 		return (NULL);
-	for (i = 0; i < size; i++) /* insert each symbol into the heap */
+	for (i = 0; i < size; i++)
 	{
 		symbol_t *symbol = symbol_create(data[i], freq[i]);
-		binary_tree_node_t *symbol_node;
+		binary_tree_node_t *node;
 
 		if (!symbol)
-		{
-			heap_delete(heap, NULL);
-			return (NULL);
-		} /* create a nested binary tree node with the symbol */
-		symbol_node = binary_tree_node(NULL, symbol);
-		if (!symbol_node)
+			return (heap_delete(heap, NULL), NULL);
+		node = binary_tree_node(NULL, symbol);
+		if (!node)
 		{
 			free(symbol);
-			heap_delete(heap, NULL);
-			return (NULL);
+			return (heap_delete(heap, NULL), NULL);
 		}
-		if (!heap_insert(heap, symbol_node)) /* insert symbol_node into heap */
+		if (!heap_insert(heap, node))
 		{
 			free(symbol);
-			free(symbol_node);
-			heap_delete(heap, NULL);
-			return (NULL);
+			free(node);
+			return (heap_delete(heap, NULL), NULL);
 		}
 	}
 	return (heap);
