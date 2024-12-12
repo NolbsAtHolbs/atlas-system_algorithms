@@ -29,7 +29,7 @@ nary_tree_t *nary_tree_insert(nary_tree_t *parent, char const *str)
 	{ /* if parent exists, insert at beginning of its child list */
 		new_node->next = parent->children;
 		parent->children = new_node;
-		parent->nb_children;
+		parent->nb_children++;
 	}
 	return (new_node);
 }
