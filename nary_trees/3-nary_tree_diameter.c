@@ -3,7 +3,7 @@
 /**
  * nary_height - computes the height of an N-ary tree's subtree
  * @root: pointer to the subtree root node
- * returns: height of the subtree.
+ * Return: height of the subtree.
  */
 static size_t nary_height(const nary_tree_t *root)
 {
@@ -23,13 +23,13 @@ static size_t nary_height(const nary_tree_t *root)
 		child = child->next;
 	}
 	/* height is tallest child's height + 1 if any child exists, else 0 */
-	return max_height + 1;
+	return (max_height + 1);
 }
 
 /**
  * nary_tree_diameter - computes the diameter of an N-ary tree
  * @root: pointer to the root of the tree
- * returns: diameter of the tree, or 0 if empty.
+ * Return: diameter of the tree, or 0 if empty.
  */
 size_t nary_tree_diameter(const nary_tree_t *root)
 {
@@ -64,5 +64,5 @@ size_t nary_tree_diameter(const nary_tree_t *root)
 	size_t candidate = top_height1 + top_height2 + 1;
 	if (candidate > current_diameter)
 		current_diameter = candidate;
-	return current_diameter;
+	return (current_diameter);
 }
