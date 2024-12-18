@@ -53,9 +53,9 @@ size_t nary_tree_diameter(const nary_tree_t *root)
 		if (node_diameter > current_diameter)
 			current_diameter = node_diameter; /* update current_diameter if larger */
 		child = child->next;
-	}
+	} /* candidate diameter at this node = sum of top two heights + 1 edge */
 	size_t candidate = top_height1 + top_height2 + 1;
-	/* candidate diameter at this node = sum of top two heights + 1 edge */
+
 	if (candidate > current_diameter)
 		current_diameter = candidate;
 	return (current_diameter);
