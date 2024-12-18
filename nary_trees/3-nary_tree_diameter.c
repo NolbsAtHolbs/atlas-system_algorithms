@@ -41,7 +41,7 @@ size_t nary_tree_diameter(const nary_tree_t *root)
 	child = root->children;
 	while (child)
 	{ /* compute top 2 heights of children and update diameter from subtrees */
-		child_height = nary_height(child); 
+		child_height = nary_height(child);
 		if (child_height > top_height1)
 		{ /* update top two heights */
 			top_height2 = top_height1;
