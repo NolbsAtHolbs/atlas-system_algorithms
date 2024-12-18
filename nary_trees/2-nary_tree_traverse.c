@@ -9,7 +9,7 @@
  */
 static size_t traverse_helper(nary_tree_t const *node,
 			      void (*action)(nary_tree_t const *, size_t),
-			      size_t current_depth)
+				  size_t current_depth)
 {
 	size_t max_child_depth = 0, child_depth;
 	nary_tree_t const *child;
@@ -37,5 +37,5 @@ size_t nary_tree_traverse(nary_tree_t const *root,
 {
 	if (!root)
 		return (0); /* no root, no depth */
-	return traverse_helper(root, action, 0);
+	return (traverse_helper(root, action, 0));
 } /* use the helper function starting at depth = 0 */
