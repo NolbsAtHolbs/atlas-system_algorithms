@@ -4,9 +4,9 @@
  * nary_height_diameter - computes subtree height & updates diam
  * @root: pointer to current node
  * @diameter: pointer to current maximum diameter found
- * Return: diameter of the tree pointed to by root
+ * Return: node height
  */
-static size_t calc_nary_height_and_update_diameter(const nary_tree_t *root,
+static size_t nary_height_diameter(const nary_tree_t *root,
 						   size_t *diameter)
 {
 	size_t max_h1 = 0, max_h2 = 0;
