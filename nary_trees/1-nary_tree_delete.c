@@ -1,6 +1,5 @@
 #include "nary_trees.h"
 
-
 /**
  * nary_tree_delete - deallocates an entire N-ary tree
  * @tree: pointer to the root node of the tree
