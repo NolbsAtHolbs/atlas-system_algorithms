@@ -46,7 +46,5 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 	if (!root)
 		return (0);
 	nary_height_diameter(root, &diameter);
-	if (diameter == 0)
-		return (0);
 	return (diameter + 1);
 } /* if there's at least one node, return diameter + 1 */
