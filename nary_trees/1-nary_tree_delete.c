@@ -13,8 +13,8 @@ void nary_tree_delete(nary_tree_t *tree)
 	for (child = tree->children; child; child = next_child)
 	{ /* loop through each child of the current node */
 		next_child = child->next; /* store child's nxt ptr b4 deleting child */
-		nary_tree_delete(child); /* recursively delete the child's entire subtree */
+		nary_tree_delete(child); /* recursively dlt child's entire subtree */
 	}
 	free(tree->content); /* free content string allocated by strdup */
-	free(tree); /* free node only after all content is freed and no children exist */
+	free(tree); /* free node after all content is freed & no children exist */
 }
