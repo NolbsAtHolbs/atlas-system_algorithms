@@ -37,14 +37,12 @@ static size_t nary_height_diameter(nary_tree_t const *root, size_t *diameter)
 /**
  * nary_tree_diameter - computes diameter of an N-ary tree
  * @root: pointer to root node
- * Returns the diameter of the tree, or 0 if empty.
+ * Return: diameter of the tree, or 0 if empty.
  */
 size_t nary_tree_diameter(nary_tree_t const *root)
 {
 	size_t diameter = 0;
 
-	if (!root)
-		return (0);
 	nary_height_diameter(root, &diameter);
 	return (diameter + 1);
 } /* if there's at least one node, return diameter + 1 */
