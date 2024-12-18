@@ -13,16 +13,14 @@ static size_t nary_height(const nary_tree_t *root)
 
 	if (!root)
 		return (0);
-	/* find the tallest child's height */
 	child = root->children;
 	while (child)
-	{
+	{ /* find the tallest child's height */
 		child_height = nary_height(child);
 		if (child_height > max_height)
 			max_height = child_height;
 		child = child->next;
-	}
-	/* height is tallest child's height + 1 if any child exists, else 0 */
+	} /* height is tallest child's height + 1 if any child exists, else 0 */
 	return (max_height + 1);
 }
 
@@ -40,28 +38,24 @@ size_t nary_tree_diameter(const nary_tree_t *root)
 
 	if (!root)
 		return (0);
-	/* compute top two heights of children and update diameter from subtrees */
 	child = root->children;
 	while (child)
-	{
-		child_height = nary_height(child);
-
-		/* update top two heights */
+	{ /* compute top 2 heights of children and update diameter from subtrees */
+		child_height = nary_height(child); 
 		if (child_height > top_height1)
-		{
+		{ /* update top two heights */
 			top_height2 = top_height1;
 			top_height1 = child_height;
 		}
 		else if (child_height > top_height2)
 			top_height2 = child_height;
-		/* compute subtree's diameter and update current_diameter if larger */
-		node_diameter = nary_tree_diameter(child);
+		node_diameter = nary_tree_diameter(child); /* compute subtree's diameter */
 		if (node_diameter > current_diameter)
-			current_diameter = node_diameter;
+			current_diameter = node_diameter; /* update current_diameter if larger */
 		child = child->next;
 	}
-	/* candidate diameter at this node = sum of top two heights + 1 edge */
 	size_t candidate = top_height1 + top_height2 + 1;
+	/* candidate diameter at this node = sum of top two heights + 1 edge */
 	if (candidate > current_diameter)
 		current_diameter = candidate;
 	return (current_diameter);
