@@ -31,6 +31,7 @@ static size_t traverse_helper(nary_tree_t const *node,
  * nary_tree_traverse - goes through an N-ary tree, node by node
  * @root: pointer to the root node of the tree to traverse
  * @action: pointer to a function to execute for each node visited
+ * Return: biggest depth of the tree pointed to by 'root'
  */
 size_t nary_tree_traverse(nary_tree_t const *root,
 			  void (*action)(nary_tree_t const *node, size_t depth))
